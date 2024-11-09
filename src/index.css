@@ -1,9 +1,65 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap");
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap");
-
 body {
   font-family: "Roboto", sans-serif;
+  font-size: 1rem;
+
+  background: linear-gradient(to top right, #c33764, #1d2671);
+  background-size: cover;
+  height: 100vh;
+  margin: 0;
+}
+
+.btn-primary {
+  @apply bg-gColor2 hover:bg-gColor2Hover active:bg-gColor2Active w-gButtonWidth h-gButtonHeight rounded-gborderRadiusButton text-white font-bold;
+}
+
+.input-primary {
+  @apply w-gInputWidth h-gInputHeight rounded-gborderRadiusInput border-transparent bg-gColor3 focus:outline-none focus:ring-2 focus:ring-gColor2 focus:border-transparent placeholder-gColor1 pl-3 pr-60;
+}
+
+.input-edit {
+  @apply w-gInputWidth h-gInputHeight rounded-gborderRadiusInput border-transparent bg-gColor3 focus:outline-none focus:ring-2 focus:ring-gColor2 focus:border-transparent placeholder-gColor1;
+}
+
+.input-delete-task {
+  @apply w-[26px] h-[26px] text-gColor6 hover:text-gColor2Active;
+}
+
+.input-edit-task {
+  @apply w-[18px] h-[18px] text-gColor6 hover:text-gColor2Active;
+}
+
+.input-confirm-edit-task {
+  @apply w-[18px] h-[18px] text-gColor2 hover:text-green-500;
+}
+
+.circle-unchecked {
+  @apply w-[42px] h-[42px] text-gColor3;
+}
+
+.circle-checked {
+  @apply w-[42px] h-[42px] text-gColor2;
+}
+
+/* barra de rolagem */
+::-webkit-scrollbar {
+  width: 4px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #ff974d;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #ff7d20;
 }

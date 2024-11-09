@@ -1,10 +1,20 @@
-import StyleGuide from "./StyleGuide";
+// import StyleGuide from "./StyleGuide";
+
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import WebRoutes from "./routes/WebRoutes";
+import { Suspense } from "react";
+
+const queryClient = new QueryClient();
 
 export default function App() {
   return (
-    <div className="flex flex-col items-center min-h-screen bg-gray-100 p-4">
-      <h1 className="text-4xl font-bold text-blue-500 mb-6">To-Do List</h1>
-      <StyleGuide />
+    <div>
+      <QueryClientProvider client={queryClient}>
+        <Suspense fallback={<div>Carregando...</div>}>
+          <WebRoutes />
+        </Suspense>
+      </QueryClientProvider>
+      {/* <StyleGuide /> */}
     </div>
   );
 }
