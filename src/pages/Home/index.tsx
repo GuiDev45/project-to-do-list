@@ -1,45 +1,48 @@
-import { useState } from "react";
+import { useState, useCallback } from "react";
 import { useForm } from "react-hook-form";
-import { IoCloseSharp } from "react-icons/io5";
-import { FaRegEdit } from "react-icons/fa";
-import { GiConfirmed } from "react-icons/gi";
-import { MdOutlineRadioButtonUnchecked } from "react-icons/md";
-import { RiCheckboxCircleFill } from "react-icons/ri";
 import { ToDo } from "../../models/ToDo";
 import { Input } from "../../components/Input";
 import Button from "../../components/Button";
+import ToDoItem from "../../components/ToDoItem";
 
 export default function Home() {
   const { register, handleSubmit, reset } = useForm<{ task: string }>();
   const [toDos, setToDos] = useState<ToDo[]>([]);
   const [editingId, setEditingId] = useState<number | null>(null);
 
-  const onSubmit = (data: { task: string }) => {
-    setToDos((prev) => [
-      ...prev,
-      { id: Date.now(), task: data.task, completed: false },
-    ]);
-    reset();
-  };
+  const onSubmit = useCallback(
+    (data: { task: string }) => {
+      setToDos((prev) => [
+        ...prev,
+        { id: Date.now(), task: data.task, completed: false },
+      ]);
+      reset();
+    },
+    [reset],
+  );
 
-  const handleEditSave = (id: number, newTask: string) => {
-    setToDos((prev) =>
-      prev.map((toDo) => (toDo.id === id ? { ...toDo, task: newTask } : toDo)),
-    );
-    setEditingId(null);
-  };
+  const handleEditSave = useCallback((id: number, newTask: string) => {
+    if (newTask.trim()) {
+      setToDos((prev) =>
+        prev.map((toDo) =>
+          toDo.id === id ? { ...toDo, task: newTask } : toDo,
+        ),
+      );
+      setEditingId(null);
+    }
+  }, []);
 
-  const handleRemove = (id: number) => {
+  const handleRemove = useCallback((id: number) => {
     setToDos((prev) => prev.filter((toDo) => toDo.id !== id));
-  };
+  }, []);
 
-  const handleToggleComplete = (id: number) => {
+  const handleToggleComplete = useCallback((id: number) => {
     setToDos((prev) =>
       prev.map((toDo) =>
         toDo.id === id ? { ...toDo, completed: !toDo.completed } : toDo,
       ),
     );
-  };
+  }, []);
 
   return (
     <div className="min-h-screen flex flex-col justify-center items-center">
@@ -71,60 +74,18 @@ export default function Home() {
             </p>
           </div>
         ) : (
-          <div style={{ maxHeight: "470px", overflowY: "auto" }}>
+          <div className="max-h-[470px] overflow-y-auto">
             <ul>
               {toDos.map((toDo) => (
-                <li key={toDo.id} className="flex items-center mb-2">
-                  <Button
-                    onClick={() => handleToggleComplete(toDo.id)}
-                    className="mr-2"
-                  >
-                    {toDo.completed ? (
-                      <RiCheckboxCircleFill className="circle-checked" />
-                    ) : (
-                      <MdOutlineRadioButtonUnchecked className="circle-unchecked" />
-                    )}
-                  </Button>
-                  {editingId === toDo.id ? (
-                    <Input
-                      defaultValue={toDo.task}
-                      onBlur={(e) => handleEditSave(toDo.id, e.target.value)}
-                      className="input-edit"
-                    />
-                  ) : (
-                    <span
-                      className={`flex-1 break-words ${
-                        toDo.completed ? "line-through text-gray-500" : ""
-                      }`}
-                      style={{ wordBreak: "break-all" }}
-                    >
-                      {toDo.task}
-                    </span>
-                  )}
-                  <div className="flex ml-2">
-                    {editingId === toDo.id ? (
-                      <Button
-                        onClick={() => handleEditSave(toDo.id, toDo.task)}
-                        className="ml-1"
-                      >
-                        <GiConfirmed className="input-confirm-edit-task" />
-                      </Button>
-                    ) : (
-                      <Button
-                        onClick={() => setEditingId(toDo.id)}
-                        className="ml-1"
-                      >
-                        <FaRegEdit className="input-edit-task" />
-                      </Button>
-                    )}
-                    <Button
-                      onClick={() => handleRemove(toDo.id)}
-                      className="ml-1"
-                    >
-                      <IoCloseSharp className="input-delete-task" />
-                    </Button>
-                  </div>
-                </li>
+                <ToDoItem
+                  key={toDo.id}
+                  toDo={toDo}
+                  editingId={editingId}
+                  setEditingId={setEditingId}
+                  handleEditSave={handleEditSave}
+                  handleRemove={handleRemove}
+                  handleToggleComplete={handleToggleComplete}
+                />
               ))}
             </ul>
           </div>

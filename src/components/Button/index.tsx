@@ -1,10 +1,10 @@
-import React from "react";
-
 type ButtonProps = {
   onClick?: () => void;
   children: React.ReactNode;
-  type?: "button" | "submit" | "reset" | undefined;
+  type?: "button" | "submit" | "reset";
   className?: string;
+  disabled?: boolean;
+  ariaLabel?: string;
 };
 
 export default function Button({
@@ -12,9 +12,17 @@ export default function Button({
   children,
   type = "button",
   className = "",
+  disabled = false,
+  ariaLabel,
 }: ButtonProps) {
   return (
-    <button type={type} onClick={onClick} className={className}>
+    <button
+      type={type}
+      onClick={onClick}
+      className={className}
+      disabled={disabled}
+      aria-label={ariaLabel}
+    >
       {children}
     </button>
   );
