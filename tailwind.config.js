@@ -6,27 +6,12 @@ module.exports = {
       colors: {
         gColor1: "#656565",
         gColor2: "#FF7D20",
+        gColor2Hover: "#CC641A",
+        gColor2Active: "#FF974D",
         gColor3: "#CBCBCB",
         gColor4: "#ECECEC",
         gColor5: "#FFFFFF",
         gColor6: "#7E7E7E",
-      },
-      backgroundImage: {
-        gBackground: "linear-gradient(to top right, #C33764, #1D2671)",
-      },
-      fontFamily: {
-        guiSans: ["Roboto", "sans-serif"],
-      },
-      fontSize: {
-        "gbody": "1rem", // 16px
-        "glg": "1.25rem", // 20px
-        "gxl": "1.5rem", // 24px
-        "g2xl": "2rem", // 32px
-        "gh1": "2.25rem", // 36px
-        "gh2": "1.5rem", // 24px
-        "gh3": "1.125rem", // 18px
-        "gbody-s": "0.875rem", // 14px
-        "gbody-l": "1.125rem", // 18px
       },
       spacing: {
         4: "4px",
@@ -48,6 +33,16 @@ module.exports = {
       },
       borderRadius: {
         gborderRadius: "30px",
+        gborderRadiusButton: "30px",
+        gborderRadiusInput: "50px",
+      },
+      width: {
+        gButtonWidth: "136px",
+        gInputWidth: "480px",
+      },
+      height: {
+        gButtonHeight: "52px",
+        gInputHeight: "48px",
       },
     },
   },
