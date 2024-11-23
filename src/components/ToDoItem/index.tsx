@@ -25,7 +25,7 @@ export default function ToDoItem({
   handleToggleComplete,
 }: ToDoItemProps) {
   return (
-    <li className="flex items-center mb-2">
+    <li className="flex items-center mb-2 mt-2">
       <Button onClick={() => handleToggleComplete(toDo.id)} className="mr-2">
         {toDo.completed ? (
           <RiCheckboxCircleFill className="circle-checked" />
