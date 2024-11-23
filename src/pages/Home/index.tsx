@@ -5,18 +5,24 @@ import { Input } from "../../components/Input";
 import Button from "../../components/Button";
 import ToDoItem from "../../components/ToDoItem";
 
+type TaskFormInputs = {
+  task: string;
+};
+
 export default function Home() {
-  const { register, handleSubmit, reset } = useForm<{ task: string }>();
+  const { register, handleSubmit, reset } = useForm<TaskFormInputs>();
   const [toDos, setToDos] = useState<ToDo[]>([]);
   const [editingId, setEditingId] = useState<number | null>(null);
 
-  const onSubmit = useCallback(
-    (data: { task: string }) => {
-      setToDos((prev) => [
-        ...prev,
-        { id: Date.now(), task: data.task, completed: false },
-      ]);
-      reset();
+  const handleAddTask = useCallback(
+    (data: TaskFormInputs) => {
+      if (data.task.trim()) {
+        setToDos((prev) => [
+          ...prev,
+          { id: Date.now(), task: data.task, completed: false },
+        ]);
+        reset();
+      }
     },
     [reset],
   );
@@ -49,11 +55,11 @@ export default function Home() {
       <img src="/img/To-Do-List.png" alt="To do list" />
       <div className="bg-gColor5 p-4 rounded-gborderRadius shadow-md w-full max-w-[600px] min-h-[650px] mt-16 px-60 py-48">
         <form
-          onSubmit={handleSubmit(onSubmit)}
+          onSubmit={handleSubmit(handleAddTask)}
           className="flex justify-center items-center relative w-[400px] mb-32"
         >
           <Input
-            {...register("task", { required: true })}
+            {...register("task", { required: "Tarefa é obrigatória" })}
             className="input-primary"
             placeholder="Digite a tarefa..."
           />
